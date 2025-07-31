@@ -1,13 +1,15 @@
-const{Router}=require('express');
-const IndexControllerController=require('../controllers/index');
+// filepath: c:\Project\index.js
+const express = require('express');
+const IndexController = require('./src/controllers/index');
 
-const router = Router();
-const indexController = new IndexController();
+const app = express();
+app.use(express.json());
 
-function setRoutes(app){
-    app.use('/api/stocks', router);
-    router.get('/', indexController.getStocks.bind(indexController));
-    router.post('/', indexController.createStock.bind(indexController));
-}
+// Define routes
+app.get('/stocks', (req, res) => IndexController.getStocks(req, res));
+app.post('/stocks', (req, res) => IndeController.createStock(req, res));
 
-module.exports = {setRoutes};
+const PORT = 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+});
